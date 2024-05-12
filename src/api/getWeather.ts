@@ -1,7 +1,9 @@
 import { WeatherReport } from "../types/types";
 
-export const getWeather = (): Promise<WeatherReport> => {
-  return fetch("https://goweather.herokuapp.com/weather/Barcelona").then(
-    (data) => data.json()
-  );
-};
+export const getWeather =
+  (city = "Barcelona") =>
+  (): Promise<WeatherReport> => {
+    return fetch(`https://goweather.herokuapp.com/weather/${city}`).then(
+      (data) => data.json()
+    );
+  };

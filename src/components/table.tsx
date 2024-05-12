@@ -3,6 +3,7 @@ import DataGrid, { Column } from "react-data-grid";
 import "react-data-grid/lib/styles.css";
 import { getWeather } from "../api/getWeather";
 import { Forecast, WeatherReport } from "../types/types";
+import { useState } from "react";
 
 const columns: Column<Forecast>[] = [
   {
@@ -19,17 +20,24 @@ const columns: Column<Forecast>[] = [
   },
 ] as const;
 export const Table = () => {
+  const [city, setCity] = useState("Madrid");
   const { isLoading, data } = useQuery<WeatherReport>({
-    queryKey: ["weather"],
-    queryFn: getWeather,
+    queryKey: ["weather", city],
+    queryFn: getWeather(city),
   });
 
-  return isLoading ? (
-    <div>Loading</div>
-  ) : (
-    <>
-      <h1>{data?.temperature}</h1>
-      <DataGrid columns={columns} rows={data?.forecast as Forecast[]} />
-    </>
+  return (
+    <section>
+      <div>City Picker</div>
+      <input onBlur={(input) => setCity(input.target.value)}></input>
+      {isLoading ? (
+        <div>Loading</div>
+      ) : (
+        <>
+          <h1>{data?.temperature}</h1>
+          <DataGrid columns={columns} rows={data?.forecast as Forecast[]} />
+        </>
+      )}
+    </section>
   );
 };
