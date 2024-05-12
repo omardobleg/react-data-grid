@@ -3,8 +3,7 @@ import DataGrid, { Column } from "react-data-grid";
 import "react-data-grid/lib/styles.css";
 import { getWeather } from "../api/getWeather";
 import { Forecast, WeatherReport } from "../types/types";
-import { useContext, useState } from "react";
-import { WheatherContext } from "./weather-provider";
+import { useState } from "react";
 
 const columns: Column<Forecast>[] = [
   {
@@ -21,8 +20,7 @@ const columns: Column<Forecast>[] = [
   },
 ] as const;
 export const Table = () => {
-  const providedCity = useContext(WheatherContext);
-  const [city, setCity] = useState(providedCity);
+  const [city, setCity] = useState("Madrid");
   const { isLoading, data } = useQuery<WeatherReport>({
     queryKey: ["weather", city],
     queryFn: getWeather(city),
