@@ -8,7 +8,9 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <WeatherProvider city="Barcelona">
         <Table />
-        <Table />
+        <WeatherProvider city="Madrid">
+          <Table />
+        </WeatherProvider>
       </WeatherProvider>
     </QueryClientProvider>
   );
